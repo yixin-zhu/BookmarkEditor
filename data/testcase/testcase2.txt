@@ -1,0 +1,23 @@
+bookmark "test2.bmk"
+add-title "标题"
+add-title "标题1" at "标题"
+add-bookmark "FDU"@"https://www.fudan.edu.cn/" at "标题1"
+add-bookmark "FDU"@"https://www.fudan.edu.cn/" at "标题1"
+add-title "标题2" at "标题"
+add-title "标题3" at "标题"
+add-title "标题2.1" at "标题2"
+add-title "标题2.1.1" at "标题2.1"
+add-title "标题2.1.1" at "标题2.1"
+add-bookmark "FDU"@"https://www.fudan.edu.cn/" at "标题2.1.1"
+add-bookmark "FDUCS"@"https://cs.fudan.edu.cn/" at "标题2.1.1"
+show-tree
+delete-bookmark "FDU"
+show-tree
+delete-title "标题2.1.1"
+show-tree
+save
+delete-title "标题"
+show-tree
+open "test1.bmk"
+open "test2.bmk"
+show-tree
