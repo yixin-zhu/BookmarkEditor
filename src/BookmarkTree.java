@@ -1,3 +1,4 @@
+import Adapter.DirectorAdaptor;
 import Command.AddCommand;
 import Command.DeleteCommand;
 import Command.Command;
@@ -109,6 +110,10 @@ public class BookmarkTree {
                 this.print();
                 break;
             case "ls-tree" :
+                File tempFile = new File("");
+                File currentFile = new File(tempFile.getAbsolutePath());
+                this.root = new DirectorAdaptor(currentFile);
+                this.print();
                 break;
             case "undo" :
                 if(usedCommand.size() > 0) {
@@ -189,10 +194,15 @@ public class BookmarkTree {
     }
     public void test() throws Exception {
         root = new TitleNode("root");
+        runFromFile("data/testcase/testcase4.txt");
+        /*
         runFromFile("data/testcase/testcase1.txt");
         runFromFile("data/testcase/testcase2.txt");
         runFromFile("data/testcase/testcase3.txt");
         runFromFile("data/testcase/testcase5.txt");
+
+
+         */
         /*
         System.out.println("Please enter your command!");
         while(true){

@@ -8,6 +8,10 @@ import java.util.Objects;
 
 public class TitleNode extends Node {
 
+    public TitleNode(){
+
+    }
+
     public TitleNode(String titleName){
         this.name = titleName;
         this.children = new ArrayList<>();
@@ -17,6 +21,10 @@ public class TitleNode extends Node {
 
     public List<Node> getChildren() {
         return children;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public String toString(int level){
@@ -110,13 +118,13 @@ public class TitleNode extends Node {
                 System.out.print("├── ");
                 active.add(true);
             }
-            System.out.println(name);
+            System.out.println(this.getName());
         } else {
             active.add(false);
         }
-        int n = children.size();
+        int n = this.getChildren().size();
         for(int i=0; i<n; i++){
-            children.get(i).printTree(active, level+1, i >= n - 1);
+            this.getChildren().get(i).printTree(active, level+1, i >= n - 1);
         }
         active.remove(active.size()-1);
     }

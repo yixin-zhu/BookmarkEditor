@@ -25,6 +25,10 @@ public class BookmarkNode extends Node {
         return name;
     }
 
+    public String getPrintName() {
+        return ("\"" + this.getName() + "\"");
+    }
+
     public String toString(){
         return ("[" + name + "](" + url + ")");
     }
@@ -46,6 +50,6 @@ public class BookmarkNode extends Node {
         } else {
             System.out.print("├── ");
         }
-        System.out.println("\"" + this.getName() + "\"");
+        System.out.println(getPrintName());
     }
 }
