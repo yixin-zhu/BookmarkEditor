@@ -69,7 +69,7 @@ public class BookmarkTree {
                 break;
             case "add-title" :
                 String addName = cp.getTitleNameFromAddTitleCommand(command);
-                String destinationName = cp.getDestinationNameFromAddBookmarkCommand(command);
+                String destinationName = cp.getDestinationNameFromAddTitleCommand(command);
                 TitleNode addNode = new TitleNode(addName);
                 AddCommand ac = new AddCommand(addNode, root, destinationName);
                 ac.execute();

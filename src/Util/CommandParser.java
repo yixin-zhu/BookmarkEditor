@@ -19,8 +19,11 @@ public class CommandParser {
     }
 
     public String getDestinationNameFromAddTitleCommand(String command){
-        int indexOfAt = command.indexOf("at");
-        int indexBeginDestinationName = command.indexOf('\"', indexOfAt)+1;
+        int indexOfAt = command.indexOf("\" at \"");
+        if(indexOfAt < 0 ){
+            return "root";
+        }
+        int indexBeginDestinationName = command.indexOf('\"', indexOfAt+1)+1;
         int indexEndDestinationName = command.indexOf('\"', indexBeginDestinationName);
         return command.substring(indexBeginDestinationName, indexEndDestinationName);
     }
@@ -39,11 +42,11 @@ public class CommandParser {
     }
 
     public String getDestinationNameFromAddBookmarkCommand(String command) {
-        int indexOfAt = command.indexOf("at");
+        int indexOfAt = command.indexOf("\" at \"");
         if(indexOfAt < 0 ){
             return "root";
         }
-        int indexBeginDestinationName = command.indexOf('\"', indexOfAt)+1;
+        int indexBeginDestinationName = command.indexOf('\"', indexOfAt+1)+1;
         int indexEndDestinationName = command.indexOf('\"', indexBeginDestinationName);
         return command.substring(indexBeginDestinationName, indexEndDestinationName);
     }
