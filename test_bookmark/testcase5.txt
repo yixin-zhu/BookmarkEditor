@@ -1,0 +1,7 @@
+open "test1.bmk"
+read-bookmark "FDU"
+read-bookmark "FDUCS"
+show-tree
+open "test2.bmk"
+open "test1.bmk"
+show-tree

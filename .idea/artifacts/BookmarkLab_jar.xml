@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BookmarkLab:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BookmarkLab_jar</output-path>
+    <root id="archive" name="BookmarkLab.jar">
+      <element id="module-output" name="BookmarkLab" />
+    </root>
+  </artifact>
+</component>

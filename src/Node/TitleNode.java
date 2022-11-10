@@ -1,5 +1,6 @@
 package Node;
 
+import Visitor.NodeVisitor;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Objects;
 public class TitleNode extends Node {
 
     public TitleNode(){
-
     }
 
     public TitleNode(String titleName){
@@ -36,20 +36,6 @@ public class TitleNode extends Node {
         return ans;
     }
 
-    public void output(BufferedWriter bw, int level) throws IOException {
-        if(level>0){
-            bw.write(this.toString(level));
-            bw.newLine();
-        }
-        for(Node child : children){
-            if(child instanceof TitleNode){
-                ((TitleNode) child).output(bw, level+1);
-            } else {
-                child.output(bw);
-            }
-        }
-
-    }
     public TitleNode findFirst(String titleName){
         if(Objects.equals(this.name, titleName)){
             return this;
@@ -60,22 +46,6 @@ public class TitleNode extends Node {
                     if(findFromChild!=null){
                         return findFromChild;
                     }
-                }
-            }
-        }
-        return null;
-    }
-
-    public BookmarkNode findFirstBookmark(String titleName){
-        for(Node child : children){
-            if(child instanceof TitleNode){
-                BookmarkNode findFromChild = ((TitleNode) child).findFirstBookmark(titleName);
-                if(findFromChild!=null){
-                    return findFromChild;
-                }
-            } else if (child instanceof BookmarkNode){
-                if(Objects.equals(((BookmarkNode) child).getName(), titleName)) {
-                    return (BookmarkNode) child;
                 }
             }
         }
@@ -102,31 +72,8 @@ public class TitleNode extends Node {
         children.add(index, child);
     }
 
-    public void printTree(List<Boolean> active, int level, Boolean isLastSibling){
-        if(level > 0){
-            for(int i=1; i<level; i++){
-                if(active.get(i)){
-                    System.out.print("│   ");
-                } else {
-                    System.out.print("    ");
-                }
-            }
-            if(isLastSibling){
-                System.out.print("└── ");
-                active.add(false);
-            } else {
-                System.out.print("├── ");
-                active.add(true);
-            }
-            System.out.println(this.getName());
-        } else {
-            active.add(false);
-        }
-        int n = this.getChildren().size();
-        for(int i=0; i<n; i++){
-            this.getChildren().get(i).printTree(active, level+1, i >= n - 1);
-        }
-        active.remove(active.size()-1);
+    public void accept(NodeVisitor nv) throws Exception {
+        nv.visitTitleNode(this);
     }
 
     public List<ParentInfo> findParentInfoByChildren(String childName, List<ParentInfo> ans) {
@@ -164,4 +111,5 @@ public class TitleNode extends Node {
         }
         return ans;
     }
+
 }

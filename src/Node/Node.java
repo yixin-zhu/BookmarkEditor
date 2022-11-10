@@ -1,5 +1,7 @@
 package Node;
 
+import Visitor.NodeVisitor;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
@@ -7,10 +9,10 @@ import java.util.List;
 public class Node {
     public String name;
 
-    protected void printTree(List<Boolean> active, int level, Boolean isLastSibling) {
-
+    protected void output(BufferedWriter bw) throws IOException {
     }
 
-    protected void output(BufferedWriter bw) throws IOException {
+    public void accept(NodeVisitor nv) throws Exception {
+
     }
 }

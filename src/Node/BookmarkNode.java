@@ -1,5 +1,7 @@
 package Node;
 
+import Visitor.NodeVisitor;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.List;
@@ -33,23 +35,8 @@ public class BookmarkNode extends Node {
         return ("[" + name + "](" + url + ")");
     }
 
-    public void output(BufferedWriter bw) throws IOException {
-        bw.write(this.toString());
-        bw.newLine();
+    public void accept(NodeVisitor nv) throws Exception {
+        nv.visitBookmarkNode(this);
     }
-    public void printTree(List<Boolean> active, int level, Boolean isLastSibling){
-        for(int i=1; i<level; i++){
-            if(active.get(i)){
-                System.out.print("│   ");
-            } else {
-                System.out.print("    ");
-            }
-        }
-        if(isLastSibling){
-            System.out.print("└── ");
-        } else {
-            System.out.print("├── ");
-        }
-        System.out.println(getPrintName());
-    }
+
 }

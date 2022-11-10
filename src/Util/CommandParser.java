@@ -71,4 +71,10 @@ public class CommandParser {
         int indexEndOfName = command.lastIndexOf('\"');
         return command.substring(indexBeginOfName, indexEndOfName);
     }
+
+    public String getScriptNameFromRunCommand(String command){
+        int indexBeginOfName = command.indexOf('\"')+1;
+        int indexEndOfName = command.lastIndexOf('\"');
+        return command.substring(indexBeginOfName, indexEndOfName);
+    }
 }

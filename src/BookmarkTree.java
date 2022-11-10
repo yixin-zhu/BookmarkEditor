@@ -7,6 +7,8 @@ import Node.BookmarkNode;
 import Node.ParentInfo;
 import Node.TitleNode;
 import Util.CommandParser;
+import Visitor.OutputVisitor;
+import Visitor.PrintTreeVisitor;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -24,23 +26,28 @@ public class BookmarkTree {
 
     CommandParser cp;
 
+    Boolean loopFlag;
+
     public BookmarkTree(){
         this.root = null;
         this.workingBookmarkFileName = "";
         this.usedCommand = new Stack<>();
         this.futureCommand = new Stack<>();
         this.cp = new CommandParser();
+        this.loopFlag = true;
     }
 
-    public void print(){
+    public void print() throws Exception {
         List<Boolean> active = new ArrayList<>();
-        root.printTree(active, 0, true);
+        PrintTreeVisitor pt = new PrintTreeVisitor(active, 0, true);
+        root.accept(pt);
     }
 
-    public void save(String fileName) throws IOException {
+    public void save(String fileName) throws Exception {
         FileWriter fw = new FileWriter(fileName);
         BufferedWriter bw = new BufferedWriter(fw);
-        root.output(bw, 0);
+        OutputVisitor ov = new OutputVisitor(bw, 0);
+        root.accept(ov);
         bw.close();
         fw.close();
     }
@@ -94,9 +101,8 @@ public class BookmarkTree {
                 usedCommand.add(deleteBookmarkCommand);
                 break;
             case "read-bookmark" :
-                System.out.println("read-bookmark in execute");
                 String readBookmarkName = cp.getBookmarkNameFromReadBookmarkCommand(command);
-                System.out.println(readBookmarkName);
+                System.out.println("read-bookmark " + readBookmarkName);
                 List<ParentInfo> parentInfos = root.findParentInfoByBookmark(readBookmarkName, new ArrayList<>());
                 for(ParentInfo parentInfo : parentInfos) {
                     TitleNode parent = parentInfo.getParent();
@@ -110,7 +116,7 @@ public class BookmarkTree {
                 this.print();
                 break;
             case "ls-tree" :
-                File tempFile = new File("");
+                File tempFile = new File("bookmark");
                 File currentFile = new File(tempFile.getAbsolutePath());
                 this.root = new DirectorAdaptor(currentFile);
                 this.print();
@@ -131,8 +137,14 @@ public class BookmarkTree {
                     System.out.println("Redo failed. Nothing to redo.");
                 }
                 break;
+            case "run" :
+                String scriptName = cp.getScriptNameFromRunCommand(command);
+                runFromFile(scriptName);
+                break;
+            case "exit" :
+                this.loopFlag = false;
+                break;
         }
-
     }
 
     public void runFromFile(String fileName) throws Exception {
@@ -194,22 +206,12 @@ public class BookmarkTree {
     }
     public void test() throws Exception {
         root = new TitleNode("root");
-        runFromFile("data/testcase/testcase4.txt");
-        /*
-        runFromFile("data/testcase/testcase1.txt");
-        runFromFile("data/testcase/testcase2.txt");
-        runFromFile("data/testcase/testcase3.txt");
-        runFromFile("data/testcase/testcase5.txt");
-
-
-         */
-        /*
         System.out.println("Please enter your command!");
-        while(true){
+        while(this.loopFlag){
             Scanner input = new Scanner(System.in);
             String command = input.nextLine();
             dealWithCommand(command);
-            print();
-        }*/
+        }
+        System.out.println("bye!");
     }
 }
