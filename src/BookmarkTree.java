@@ -206,8 +206,8 @@ public class BookmarkTree {
     }
     public void test() throws Exception {
         root = new TitleNode("root");
-        System.out.println("Please enter your command!");
         while(this.loopFlag){
+            System.out.println("Please enter your command!");
             Scanner input = new Scanner(System.in);
             String command = input.nextLine();
             dealWithCommand(command);
