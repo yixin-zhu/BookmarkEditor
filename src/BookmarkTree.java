@@ -28,6 +28,8 @@ public class BookmarkTree {
 
     Boolean loopFlag;
 
+    Boolean testMode;
+
     public BookmarkTree(){
         this.root = null;
         this.workingBookmarkFileName = "";
@@ -35,12 +37,31 @@ public class BookmarkTree {
         this.futureCommand = new Stack<>();
         this.cp = new CommandParser();
         this.loopFlag = true;
+        this.testMode = false;
+    }
+
+    public BookmarkTree(boolean testMode){
+        this.root = null;
+        this.workingBookmarkFileName = "";
+        this.usedCommand = new Stack<>();
+        this.futureCommand = new Stack<>();
+        this.cp = new CommandParser();
+        this.loopFlag = true;
+        this.testMode = testMode;
     }
 
     public void print() throws Exception {
+        PrintStream original = System.out;
+        if(testMode){
+            changeOutputToFile("output.txt");
+        }
         List<Boolean> active = new ArrayList<>();
         PrintTreeVisitor pt = new PrintTreeVisitor(active, 0, true);
         root.accept(pt);
+        if(testMode){
+            changeOutput(original);
+        }
+
     }
 
     public void save(String fileName) throws Exception {
@@ -213,5 +234,15 @@ public class BookmarkTree {
             dealWithCommand(command);
         }
         System.out.println("bye!");
+    }
+
+    private void changeOutputToFile(String fileName) throws Exception {
+        File file = new File(fileName);
+        PrintStream stream = new PrintStream(new FileOutputStream(file, true));
+        System.setOut(stream);
+    }
+
+    private void changeOutput(PrintStream out){
+        System.setOut(out);
     }
 }
