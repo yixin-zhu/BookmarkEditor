@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class BookmarkNode extends Node {
-    private String url;
+    protected String url;
 
     public BookmarkNode(){
 
@@ -26,6 +26,8 @@ public class BookmarkNode extends Node {
     public String getName() {
         return name;
     }
+
+    public String getUrl() {return url;}
 
     public String getPrintName() {
         return ("\"" + this.getName() + "\"");

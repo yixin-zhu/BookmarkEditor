@@ -1,0 +1,18 @@
+bookmark "test2.bmk"
+add-title "b"
+add-title "h"
+add-bookmark "c"@"ccc" at "b"
+add-title "d" at "b"
+add-title "e" at "d"
+add-bookmark "f"@"fff" at "e"
+add-title "g" at "e"
+show-tree
+delete-title "e"
+show-tree
+undo
+show-tree
+redo
+show-tree
+read-bookmark "c"
+show-tree
+save

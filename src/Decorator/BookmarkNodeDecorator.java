@@ -21,4 +21,15 @@ public class BookmarkNodeDecorator extends BookmarkNode {
         ans = ans + bookmarkNode.getName();
         return ans;
     }
+
+    public String toString(){
+        return ("[" + bookmarkNode.getName() + "](" + bookmarkNode.getUrl() + ")");
+    }
+
+    public String getUrl() {return bookmarkNode.getUrl();}
+
+    public String getPrintName() {
+        return ("\"" + this.getName() + "\"");
+    }
+
 }
